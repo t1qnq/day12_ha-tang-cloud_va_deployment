@@ -68,3 +68,24 @@ graph TD
 - **Services khởi động:** agent (FastAPI), redis (Cache/Session), qdrant (Vector DB), nginx (Proxy/LB).
 - **Communication:** Các service giao tiếp qua tên service (DNS nội bộ của Docker). Nginx đóng vai trò Load Balancer điều phối traffic cho Agent.
 - **Kết quả test (`http://localhost/health`):** Trả về **`{"status":"ok"}`**. Việc truy cập qua cổng 80 (không cần chỉ định port) chứng minh Nginx đã cấu hình Reverse Proxy thành công, bảo vệ được các dịch vụ nội bộ phía sau.
+
+---
+
+## Part 3: Cloud Deployment
+
+### Exercise 3.1: Railway deployment
+- **URL thực tế:** `https://day12ha-tang-cloudvadeployment-production-e653.up.railway.app`
+- **Trạng thái:** ✅ Hoạt động (Đã test health check và /ask thành công).
+- **Screenshot:** *(Sinh viên tự chụp ảnh Dashboard Railway và đính kèm vào báo cáo).*
+
+### Exercise 3.2: Config comparison (railway.toml vs render.yaml)
+
+| Feature | Railway (railway.toml) | Render (render.yaml) |
+|---------|------------------------|----------------------|
+| **Định dạng** | TOML | YAML (Blueprint) |
+| **Phạm vi** | Cấu hình cho 1 service cụ thể. | Infrastructure as Code (IaC) cho cả stack (Web, Redis...). |
+| **Cơ chế Build** | Ưu tiên dùng Nixpacks (tự động nhận diện ngôn ngữ). | Chỉ định rõ `runtime: python` và `buildCommand`. |
+| **Quản lý Service** | Thường quản lý lẻ từng service qua giao diện. | Cho phép định nghĩa nhiều service phụ thuộc nhau trong 1 file. |
+| **Bảo mật (IP)** | Tự động cấu hình internal network. | **Bắt buộc** khai báo `ipAllowList` cho các dịch vụ như Redis (Lỗi vừa gặp). |
+
+**Nhận xét:** `render.yaml` mạnh mẽ hơn trong việc quản lý hạ tầng phức tạp và cho phép tái sử dụng (Blueprint). Trong khi đó, Railway tập trung vào trải nghiệm "Zero Config" giúp deploy cực nhanh cho các dự án đơn lẻ.
