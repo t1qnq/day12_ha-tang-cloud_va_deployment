@@ -104,6 +104,20 @@ Qua phân tích mã nguồn `01-localhost-vs-production/develop/app.py`, tôi đ
 
 ---
 
-## Part 6: Final Review
-- **Trạng thái bài Lab:** **HOÀN THÀNH (100%)**.
-- **Tổng kết:** Tôi đã làm chủ quy trình đóng gói Container tối ưu, chuyển đổi từ môi trường Develop sang Production-ready, triển khai lên Cloud (Railway), thiết lập hệ thống bảo mật đa lớp (JWT, Rate Limit, Cost Guard) và xây dựng kiến trúc mở rộng ngang (Horizontal Scaling) với Redis và Nginx.
+---
+
+## Part 6: Final Project - TravelBuddy Pro
+
+### 6.1 Tổng quan kiến trúc
+Dự án đã được chuyển đổi hoàn toàn sang mô hình **Stateless Architecture**:
+- **Backend:** FastAPI với cơ chế Dependency Injection để quản lý Auth và Settings.
+- **Session:** Sử dụng **Redis Shared Store** (Railway Managed) để lưu trữ lịch sử hội thoại, cho phép mở rộng không hạn chế.
+- **Agent:** Sử dụng LangGraph với bộ công cụ (Tools) tích hợp tìm kiếm vé máy bay và khách sạn.
+
+### 6.2 Bảo mật và Vận hành Cloud
+- **Security:** Đã triển khai lớp bảo vệ API Key thủ công qua Header `X-API-Key`.
+- **Monorepo Handling:** Sử dụng file `railway.json` tại thư mục gốc để chỉ định chính xác build context cho thư mục `06-final-project-travelbuddy`.
+- **Deployment:** [https://day12ha-tang-cloudvadeployment-production-22ec.up.railway.app](https://day12ha-tang-cloudvadeployment-production-22ec.up.railway.app)
+
+### 6.3 Kết luận
+Dự án đã đạt trạng thái **Production-Ready**, đáp ứng đầy đủ các tiêu chuẩn về bảo mật, hiệu năng (image size < 250MB) và khả năng mở rộng ngang.
