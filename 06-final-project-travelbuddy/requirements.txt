@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic-settings
+langgraph
+langchain-openai
+langchain-core
+langchain-community
+redis
+python-dotenv
+httpx
