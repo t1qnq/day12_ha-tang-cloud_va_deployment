@@ -27,6 +27,14 @@ async def verify_api_key(x_api_key: str = Header(None)):
 
 # ── Endpoints ──
 
+@app.get("/")
+def index():
+    return {
+        "message": "Welcome to TravelBuddy AI Agent!",
+        "status": "Online",
+        "documentation": "/docs"
+    }
+
 @app.get("/health")
 def health():
     return {"status": "ok", "app": settings.APP_NAME, "env": settings.ENVIRONMENT}
