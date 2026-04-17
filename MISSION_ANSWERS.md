@@ -89,3 +89,22 @@ graph TD
 | **Bảo mật (IP)** | Tự động cấu hình internal network. | **Bắt buộc** khai báo `ipAllowList` cho các dịch vụ như Redis (Lỗi vừa gặp). |
 
 **Nhận xét:** `render.yaml` mạnh mẽ hơn trong việc quản lý hạ tầng phức tạp và cho phép tái sử dụng (Blueprint). Trong khi đó, Railway tập trung vào trải nghiệm "Zero Config" giúp deploy cực nhanh cho các dự án đơn lẻ.
+
+---
+
+## Part 4: API Security
+
+### Exercise 4.1 & 4.2: Authentication (API Key vs JWT)
+- **API Key:** Đơn giản, dễ dùng cho tích hợp B2B. Khi thiếu key, hệ thống trả về `401 Unauthorized`.
+- **JWT:** Chuyên nghiệp và bảo mật hơn nhờ cơ chế "Stateless". Tôi đã lấy thành công token cho user `student` và dùng nó để xác thực mà không cần gửi lại mật khẩu.
+
+### Exercise 4.3: Rate Limiting
+- **Cơ chế:** Sử dụng thuật toán **Sliding Window** (Cửa sổ trượt).
+- **Kết quả test:** Khi gọi đến lần thứ 11 trong vòng 1 phút, hệ thống trả về lỗi **`429 Too Many Requests`** đi kèm thông tin `retry_after_seconds`. Điều này giúp ngăn chặn các cuộc tấn công Brute-force hoặc spam API.
+
+### Exercise 4.4: Cost Guard
+- **Dữ liệu thực tế từ `/me/usage`:**
+    - `input_tokens`: 110
+    - `output_tokens`: 318
+    - `cost_usd`: 0.000207
+- **Ý nghĩa:** Cost Guard đóng vai trò "chốt chặn cuối cùng", đảm bảo rằng ngay cả khi user có quyền truy cập, họ cũng không thể tiêu xài vượt quá ngân sách (1.0 USD/ngày) đã định sẵn, tránh rủi ro "vỡ nợ" hóa đơn LLM.
