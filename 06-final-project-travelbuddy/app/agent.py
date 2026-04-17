@@ -14,12 +14,16 @@ from .tools import tools_list
 class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
 
-# 2. Khởi tạo LLM
+# 2. Khởi tạo LLM (Cấu hình OpenRouter yêu cầu header định danh)
 llm = ChatOpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=settings.OPENROUTER_API_KEY,
     model=settings.MODEL_NAME,
-    temperature=0.7
+    temperature=0.7,
+    default_headers={
+        "HTTP-Referer": "https://railway.app",
+        "X-Title": "TravelBuddy-Production"
+    }
 )
 llm_with_tools = llm.bind_tools(tools_list)
 

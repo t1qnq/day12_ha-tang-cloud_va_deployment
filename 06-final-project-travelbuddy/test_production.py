@@ -2,7 +2,8 @@ import urllib.request
 import json
 import time
 
-URL = "http://localhost:8081/chat"
+# URL của Production Agent trên Railway
+URL = "https://day12ha-tang-cloudvadeployment-production-22ec.up.railway.app/chat"
 API_KEY = "travel-secret-123"
 
 def post_chat(message, session_id=None):
